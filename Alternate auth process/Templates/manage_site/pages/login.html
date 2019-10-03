@@ -1,0 +1,14 @@
+{% extends 'manage_site/index.html' %}
+
+{% block content %}
+    <a href="{% url 'manage:register' %}"> If don't have an account, please register </a>
+    <p><a href="{% url 'manage:passwd_reset' %}">Forgot a password?</a></p>
+    <h2>Login</h2>
+    <form method="post">
+        {% csrf_token%}
+        {{form.as_ul}}
+        <li>
+            <button type="submit">Login</button>
+        </li>
+    </form>
+{% endblock %}

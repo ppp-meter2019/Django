@@ -1,0 +1,21 @@
+<header>
+    <nav class="header-top-menu">
+        <ul class="header_container">
+            <li>SMTH-1</li>
+            <li>SMTH-2</li>
+            {%if request.user.is_authenticated and request.user.managersuser.is_super_manager %}
+                <li><a href="{% url 'manage:all_managers' %}">AllManagers</a></li>
+                <li><a href="{% url 'manage:all-categoires' %}">категории</a></li>
+            {% endif %}
+            {%if request.user.is_authenticated and request.user.managersuser.is_super_manager %}
+                <li><a href="{% url 'manage:cat_link_binding' %}">Category Link Binding</a></li>
+            {% endif %}
+            {%if request.user.is_authenticated %}
+                <li><a href ="">Profile</a></li>
+                <li><a href="{% url 'manage:logout' %}">Logout</a></li>
+            {%else%}
+                <li><a href="{% url 'manage:login' %}">Login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>

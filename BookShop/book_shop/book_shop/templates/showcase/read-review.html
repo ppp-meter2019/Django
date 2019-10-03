@@ -1,0 +1,63 @@
+{% extends 'index.html' %}
+{% load poll_extras %}
+
+
+
+{% block title %}
+{{review_instance.title}}
+{% endblock %}
+
+{% block content %}
+    <main class="main_block">
+        <div class="image_of_reviwed_book">
+            <img class="free_image" src="{{review_instance.book.image.url}}">
+        </div>
+
+        <div class="review_and_comments_block_container">
+
+            <div class="full_reviev_container">
+                <h2>{{review_instance.author}}: "{{review_instance.title}}"</h2>
+                <div>
+                {{review_instance.content|safe}}
+                </div>
+            </div>
+
+            <div class="review_all_comments">
+                    {% for comment in review_instance.comment_set.all%}
+                    <li>
+
+                        {% if comment.from_user.reviewauthor.type_view == 'fio'%}
+                        <span>@{{ comment.from_user.first_name}} {{ comment.from_user.last_name}}:</span>
+                        {% else %}
+                        <span>@{{comment.from_user.reviewauthor.pseudoname }}:</span>
+                        {% endif %}
+                        <span>{{ comment.msg}}</span>
+                    </li>
+
+
+                    {% empty %}
+                        <p>Будете первыми?</p>
+                    {% endfor %}
+            </div>
+
+            <div>
+                    <form method="post" class="login_form_flex">
+
+                        {% if request.user.is_authenticated %}
+                        {% csrf_token %}
+                        {% endif %}
+                        {{ form.as_ul }}
+                            <li>
+
+                                <button {% if not request.user.is_authenticated %} class="btn-disable"{% endif %}
+                                        type="submit">Отправить
+                                </button>
+                        </li>
+                        </form>
+            </div>
+
+        </div>
+
+
+    </main>
+{% endblock %}

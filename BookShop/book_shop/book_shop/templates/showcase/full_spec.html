@@ -1,0 +1,67 @@
+{% extends 'index.html' %}
+{% load poll_extras %}
+
+
+
+{% block title %}
+О книге
+{% endblock %}
+
+{% block content %}
+    <main class="main_block_full_spec">
+
+        <div class="full_spec_main_container">
+            <div class="full_spec_cover">
+                <img  src="{{book_instance.image.url}}">
+
+            </div>
+
+            <div class="full_spec_info">
+                <p><strong>Название:</strong> {{book_instance.short_title}}</p>
+                {% if book_instance.full_title %}
+
+                    <p><strong>Название полное:</strong> {{book_instance.full_title}}</p>
+
+                {% endif %}
+                <ul class="goods_main_info_ul">
+
+                  <li class="goods_main_info_li"><strong>Жанр:</strong>
+                    {% for genre in book_instance.genre.all %}
+                        {{genre}}{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                  </li>
+                  <li class="goods_main_info_li"><strong>ISBN:</strong> {{book_instance.isbn_num}}</li>
+                  <li class="goods_main_info_li"><strong>Издательство:</strong> {{book_instance.publisher}}</li>
+                  <li class="goods_main_info_li"><strong>Год издания:</strong> {{book_instance.published_at}}</li>
+                  <li class="goods_main_info_li"><strong>О книге:</strong> {{book_instance.annotation}}</li>
+			  </ul>
+
+
+        <div class="goods_price">
+			  <strong>Цена: <span {% if book_instance.is_sale %} class="price_sale_old" {% endif %}>{{book_instance.price}} грн </span>
+				  {% if book_instance.is_sale %}
+				  	<span class="price_sale_new"> {{book_instance.price|new_price:book_instance.percent_sale}} грн </span>
+				  {% endif %}
+			  </strong>
+
+	 	   </div>
+        </div>
+        </div>
+        <div class="full_spec_footer">
+            <div class="back_button">
+                <a href="javascript:history.go(-1)" >BACK</a>
+            </div>
+            {% if not basket %}
+            <div class="add_to_cart_button">
+                <a href="{% url 'u_cabinet:basket-add' book_id=book_instance.id %}" >Добавить в корзину </a>
+            </div>
+            {% endif%}
+            <div class="add_review">
+                <a href="{% url 'u_cabinet:new_review' pk=book_instance.id %}" >Написать обзор</a>
+            </div>
+
+        </div>
+    </main>
+{% endblock %}
+
+

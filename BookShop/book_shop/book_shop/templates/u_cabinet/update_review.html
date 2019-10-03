@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+
+{% block title %}Написать обзор{% endblock %}
+
+{% block content %}
+<main class="main_block">
+  <div class="login_form_container">
+    <h2>Написать обзор на книгу: </h2>
+    <h2>{{book.short_title}}</h2>
+    <form method="post" class="login_form_flex">
+      {% csrf_token %}
+      <li>
+        {{form.media}}
+      </li>
+      {{ form.as_ul }}
+      <li>
+        <button type="submit">Отправить</button>
+      </li>
+    </form>
+
+
+  </div>
+</main>
+{% endblock %}

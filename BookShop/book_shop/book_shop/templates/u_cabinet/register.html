@@ -1,0 +1,43 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<main class="main_block">
+<!--<input type="checkbox">-->
+<!--Car<input type="radio" name="test" value="car">-->
+<!--Bike<input type="radio" name="test" value="Bike">-->
+<!--Metro<input type="radio" name="test" value="Metro">-->
+    <div class="user_register_form_container">
+        <p class="reg_header "><span > Регистрация нового пользователя - </span>
+        <a href="{% url 'u_cabinet:login' %}">Есть аккаунт?</a>
+        </p>
+        <form class="user_register_form_flex" method="post" action="{% url 'u_cabinet:register' %}">
+            {% csrf_token %}
+            {% for field in form %}
+            <li>
+                {{ field.label_tag }}
+                {{ field }}
+            </li>
+            <li class="helptext">
+                {{ field.help_text }}
+            </li>
+
+                {% if field.errors %}
+
+                {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
+            {% endif %}
+            </p>
+            {% endfor %}
+            <label for="">Потверждать почту</label>
+            <input type="checkbox" name="check_mail">
+
+            <li>
+                <button type="submit">Sign up</button>
+                <button type="reset"> reset </button>
+            </li>
+            <!--<button>Sign up</button>-->
+        </form>
+    </div>
+</main>
+{% endblock %}

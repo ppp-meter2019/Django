@@ -1,0 +1,69 @@
+{% extends 'manage_site/index.html' %}
+{% load poll_extras %}
+{% block content%}
+
+ <form method="POST" >
+     {% csrf_token %}
+
+     <table class="table table-striped">
+                <tr>
+                    <th>Username</th>
+                    <th>First Name</th>
+                    <th>Second Name</th>
+                    <th>Email</th>
+                    <th>Confirmed Email</th>
+                    <th>"is manager"</th>
+                    <th>"is_super_manager"</th>
+                </tr>
+                {% for manager in all_managers %}
+                <tr>
+                    <td>{{ manager.user.username }}</td>
+                    <td>{{ manager.user.first_name }}</td>
+                    <td>{{ manager.user.last_name }}</td>
+                    <td>{{ manager.user.email }}</td>
+                    <td>{{ manager.user.is_active }}</td>
+                    <td><input type="checkbox" value='{{manager.id}}'
+                     name='for_action_manager' id='for_action_manager_{{manager.id}}'
+                               {% if manager.is_manager %}checked{% endif %}>
+                    </td>
+                    <td><input type="checkbox" value='{{manager.id}}'
+                     name='for_action_super_manager' id='for_action_super_manager{{manager.id}}'
+                               {% if manager.is_super_manager %}checked{% endif %}>
+                    </td>
+
+
+                </tr>
+                {% endfor %}
+                <input type="hidden" name="managers_items_onpage" value="{{all_managers|get_values_list:'id'}}">
+    </table>
+    <input type="submit" value="Save">
+ </form>
+
+
+{% if is_paginated %}
+
+        <div class="paginate_container">
+            <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+
+            {% for i in paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+            </ul>
+        </div>
+        {% endif %}
+{% endblock%}

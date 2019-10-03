@@ -1,0 +1,62 @@
+{% extends 'index.html' %}
+
+
+{% block content %}
+<main class="main_block">
+
+
+    <div class="left_menu_container">
+		<nav class="left_menu">
+			<ul class="left_menu_ul">
+		        <li class="left_menu_li_head  "><a  href="{% url 'u_cabinet:profile' request.session.reviewauthor_id%}">
+                    Мой профиль</a></li>
+
+                 <li class="left_menu_li_head"><a  href="{% url 'u_cabinet:my_reviews' %}">
+                    Мои статьи</a></li>
+
+			</ul>
+        </nav>
+    </div>
+
+    {% block right_col %}
+    <div class="user_update_form_container">
+
+        <h1>Hello {{request.user.first_name}} {{request.user.last_name}} !</h1>
+
+
+                <form class="user_update_form_flex" action="{% url 'u_cabinet:profile' pk=object.id %}" method="post">
+                    {% csrf_token %}
+                    {{ form.as_ul }}
+                <li>
+                    <button id="confirm_submit">Save!</button>
+                </li>
+
+                </form>
+                 {% if save %}
+                        <p class="alert-success">Успешно сохранили данные!</p>
+                    {% endif %}
+
+            </div>
+
+    </div>
+    {% endblock %}
+</main>
+
+
+
+<script>
+    window.addEventListener('load', function () {
+        var btn = document.getElementById('confirm_submit');
+        btn.addEventListener('click', function (e) {
+            var response = confirm('Realy???');
+            if (response) {
+                return true;
+            } else {
+                e.preventDefault();
+                return;
+            }
+        })
+    });
+
+</script>
+{% endblock %}

@@ -1,0 +1,15 @@
+
+	<div class="left_menu_container">
+		<nav class="left_menu">
+			<ul class="left_menu_ul">
+		        <li class="left_menu_li_head  "><a {% if curr_id == 0 %} class=" left_menu_active_item" {% endif %} href="{% url l_menu_sel g_filter=0 %}">Все книги
+                    {% if curr_tab == 'sale' %} по акции{% endif %}</a></li>
+
+                {% for elem in all_genres %}
+                <li class="left_menu_li"><a {% if curr_id == elem.id %} class=" left_menu_active_item" {% endif %} href="{% url l_menu_sel g_filter=elem.id %}">{{elem.name}}</a></li>
+                {% endfor %}
+
+			</ul>
+        </nav>
+    </div>
+

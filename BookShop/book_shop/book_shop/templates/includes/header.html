@@ -1,0 +1,32 @@
+<header>
+
+    <nav class="h_top-menu">
+	    <ul class="h_top-menu-ul">
+			<li class="h_top-menu-li {% if curr_tub == 'index' %} h_top-menu-li-current {% endif %}"><a href="{% url 'showcase:index' %}">Главная</a></li>
+			<li class="h_top-menu-li{% if curr_tub == 'sale' %} h_top-menu-li-current {% endif %}"><a href="{% url 'showcase:sale' g_filter=0  %}">Акции</a></li>
+			<li class="h_top-menu-li"><a href="{% url 'showcase:all_reviews' %}">Обзоры</a></li>
+			<li class="h_top-menu-li{% if curr_tub == 'about_us' %} h_top-menu-li-current {% endif %}"><a href="{% url 'showcase:about_us' %}">О Магазине</a></li>
+			<li class="h_top-menu-li"><a href="/">Оплата и доставка</a></li>
+			<li class="h_top-menu-li {% if curr_tub == 'basket' %} h_top-menu-li-current {% endif %}"><a href="{% url 'u_cabinet:basket' %}">Корзина
+				{% if request.session.selected_items|length %}
+				<span class="user_profile">({{request.session.selected_items|length}})</span>
+				{% endif %}
+			</a></li>
+			{% if request.user.is_authenticated  %}
+				<li class="h_top-menu-li {% if curr_tub == 'profile' %} h_top-menu-li-current {% endif %}">
+					<a href="{% url 'u_cabinet:profile' pk=request.session.reviewauthor_id%}">Профиль(<span class="user_profile">{{request.user}}</span>)
+					</a>
+				</li>
+				<li class="h_top-menu-li"><a href="{% url 'u_cabinet:logout' %}">Выход</a></li>
+			{% else %}
+				<li class="h_top-menu-li"><a href="{% url 'u_cabinet:register' %}">Ригистрация</a></li>
+				<li class="h_top-menu-li"><a href="{% url 'u_cabinet:login' %}">Вход</a></li>
+			{% endif %}
+		</ul>
+	</nav>
+
+	</header>
+
+
+
+

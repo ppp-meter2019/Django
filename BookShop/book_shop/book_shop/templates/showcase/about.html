@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+
+{% block content %}
+{% load static %}
+<main class="main_block_about">
+    <h2> О магазине </h2>
+    <br>
+    <div class="about_main_container">
+		<div class="about_map">
+			<h2> Карта проезда </h2>
+			<img src={% static "img/map.jpg" %}>
+
+		</div>
+		<div class="about_contacts">
+			<h2>Наш адрес</h2>
+			<p> Улица Степана Бандеры, дом 103, офис 117</p>
+			<h2>Наши телефоны</h2>
+
+            <ul>
+				<li><img class="operators" src={% static "img/kyivstar.png" %} alt="Kyivstar"> +380672012121</li>
+				<li><img class="operators" src={% static "img/lifecell.jpg" %} alt="Lifecell"> +380632052233</li>
+				<li><img class="operators" src={% static "img/dnipro.png" %} alt="Dnipro"> +380572014345</li>
+
+			</ul>
+		</div>
+	</div>
+
+
+
+</main>
+
+{% endblock %}

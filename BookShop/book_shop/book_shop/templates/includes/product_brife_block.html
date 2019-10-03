@@ -1,0 +1,53 @@
+{% load poll_extras %}
+<div class="goods_container">
+	{% if del == True %}
+		<span class="closeItem"><a href="{% url 'u_cabinet:basket-remove' book_id=book.id %}">X</a></span>
+	{% endif %}
+
+	<div class="goods_name">
+	 	    <strong>{{book.short_title}}</strong>
+
+	</div>
+
+	<div class="goods_info">
+		<div class="goods_image {% if book.is_sale %} sale {% endif %}">
+			{% if basket == True %}
+			<a href="{% url 'showcase:info_in_basket' pk=book.id%}">
+			{% else %}
+			<a href="{% url 'showcase:bfi' pk=book.id%}">
+			{% endif %}
+			{% if book.image %}
+				<img  class="free_image" src="{{book.image.url}}">
+			{% endif %}
+		  	</a>
+	</div>
+
+	<div class="goods_main_info">
+		<ul class="goods_main_info_ul">
+		  <li class="goods_main_info_li"><strong>Автор:</strong> {{book.author}}</li>
+		  <li class="goods_main_info_li"><strong>Жанр:</strong>
+			{% for genre in book.genre.all %}
+				{{genre}}{% if not forloop.last %},{% endif %}
+			{% endfor %}
+		  </li>
+		  <li class="goods_main_info_li"><strong>ISBN:</strong> {{book.isbn_num}}</li>
+		  <li class="goods_main_info_li"><strong>Издательство:</strong>{{book.publisher}}</li>
+		  <li class="goods_main_info_li"><strong>Год издания:</strong>{{book.published_at}}</li>
+
+		</ul>
+	</div>
+
+	</div>
+		  <div class="goods_price">
+			  {% if review_num != True%}
+			  <p><strong>Цена: <span {% if book.is_sale %} class="price_sale_old" {% endif %}>{{book.price}} грн </span>
+			  	{% if book.is_sale %}
+			  		<span class="price_sale_new"> {{book.price|new_price:book.percent_sale}} грн </span>
+			  	{% endif %}
+			  	</strong></p>
+			  {% else %}
+			  	<p class="read_review_link" ><a href="{% url 'showcase:reviews_by_book' book_id=book.id %}"><strong>Читать обзоры: {{book.num_reviews}}</strong></a></p>
+			  {% endif %}
+		  </div>
+</div>
+

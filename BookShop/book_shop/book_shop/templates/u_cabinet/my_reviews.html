@@ -1,0 +1,21 @@
+{% extends 'u_cabinet/profile.html' %}
+{% load static %}
+{% block right_col %}
+<div class="users_reviews_container">
+<h1>Мои обзоры: <span class="js-count">{{my_reviews|length}}</span>!</h1>
+
+
+
+<br>
+<br>
+<div class="users_reviews_list_flex">
+    <li><span>№</span><span>Заголовок</span> <span>Publish?</span> <span>На книгу</span> <span>Create at</span><span >Action</span></li>
+{% for review in my_reviews %}
+    <li><span>{{forloop.counter}}</span><span>{{review.title}}</span> <span>{{review.status}}</span> <span>{{review.book.short_title}}</span> <span>{{review.create_at}}</span>
+    <span><p class="read_item"> <a href ="{% url 'u_cabinet:update_review' pk=review.id%}"> Редактировать </a></p></span></li>
+{% empty %}
+ Nothing
+{% endfor %}
+
+</div>
+{% endblock%}
